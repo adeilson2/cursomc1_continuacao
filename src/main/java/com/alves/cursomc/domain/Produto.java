@@ -2,7 +2,9 @@ package com.alves.cursomc.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
@@ -36,6 +39,9 @@ inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 
 private List<Categoria> categorias = new ArrayList<>();
 
+@OneToMany(mappedBy = "id.produto")
+private Set<ItemPedido> itens = new  HashSet<>();
+
 public List<Categoria> getCategorias() {
 	return categorias;
 }
@@ -56,6 +62,17 @@ public Produto(Integer id, String nome, double preco) {
 	this.nome = nome;
 	this.preco = preco;
 }
+
+public List <Pedido> getPedidos (){
+	List <Pedido> lista = new ArrayList<>();
+	for (ItemPedido x : itens) {
+		lista.add(x.getPedido());
+		
+	}
+	return lista;
+	
+}
+
 
 public Integer getId() {
 	return id;
@@ -79,6 +96,14 @@ public double getPreco() {
 
 public void setPreco(double preco) {
 	this.preco = preco;
+}
+
+public Set<ItemPedido> getItens() {
+	return itens;
+}
+
+public void setItens(Set<ItemPedido> itens) {
+	this.itens = itens;
 }
 
 @Override
@@ -105,8 +130,6 @@ public boolean equals(Object obj) {
 		return false;
 	return true;
 }
-
-
 
 
 }
