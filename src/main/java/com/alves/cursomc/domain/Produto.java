@@ -15,9 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
@@ -32,7 +29,7 @@ private Integer id;
 private String nome;
 private double preco;
 
-@JsonBackReference
+@JsonIgnore
 @ManyToMany
 @JoinTable( name= "PRODUTO_CATEGORIA",
 joinColumns = @JoinColumn(name = "produto_id"),
